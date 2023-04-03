@@ -2,7 +2,7 @@ package com.example.slabiak.appointmentscheduler.model;
 
 import com.example.slabiak.appointmentscheduler.entity.Work;
 import com.example.slabiak.appointmentscheduler.entity.user.User;
-import com.example.slabiak.appointmentscheduler.entity.user.customer.CorporateCustomer;
+import com.example.slabiak.appointmentscheduler.entity.user.customer.ParishCustomer;
 import com.example.slabiak.appointmentscheduler.entity.user.customer.RetailCustomer;
 import com.example.slabiak.appointmentscheduler.entity.user.provider.Provider;
 import com.example.slabiak.appointmentscheduler.validation.FieldsMatches;
@@ -58,13 +58,13 @@ public class UserForm {
     private String city;
 
     /*
-     * CorporateCustomer only:
+     * ParishCustomer only:
      * */
-    @NotBlank(groups = {CreateCorporateCustomer.class, UpdateCorporateCustomer.class}, message = "Company cannot be empty")
+    @NotBlank(groups = {CreateParishCustomer.class, UpdateParishCustomer.class}, message = "Company cannot be empty")
     private String companyName;
 
-    @Pattern(groups = {CreateCorporateCustomer.class, UpdateCorporateCustomer.class}, regexp = "[0-9]{10}", message = "Please enter valid Polish VAT number")
-    @NotBlank(groups = {CreateCorporateCustomer.class, UpdateCorporateCustomer.class}, message = "VAT number cannot be empty")
+    @Pattern(groups = {CreateParishCustomer.class, UpdateParishCustomer.class}, regexp = "[0-9]{10}", message = "Please enter valid Polish VAT number")
+    @NotBlank(groups = {CreateParishCustomer.class, UpdateParishCustomer.class}, message = "VAT number cannot be empty")
     private String vatNumber;
 
     /*
@@ -98,10 +98,10 @@ public class UserForm {
         this((User) retailCustomer);
     }
 
-    public UserForm(CorporateCustomer corporateCustomer) {
-        this((User) corporateCustomer);
-        this.setCompanyName(corporateCustomer.getCompanyName());
-        this.setVatNumber(corporateCustomer.getVatNumber());
+    public UserForm(ParishCustomer parishCustomer) {
+        this((User) parishCustomer);
+        this.setCompanyName(parishCustomer.getCompanyName());
+        this.setVatNumber(parishCustomer.getVatNumber());
     }
 
     public int getId() {

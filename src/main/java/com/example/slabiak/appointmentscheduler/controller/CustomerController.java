@@ -6,9 +6,9 @@ import com.example.slabiak.appointmentscheduler.model.UserForm;
 import com.example.slabiak.appointmentscheduler.security.CustomUserDetails;
 import com.example.slabiak.appointmentscheduler.service.AppointmentService;
 import com.example.slabiak.appointmentscheduler.service.UserService;
-import com.example.slabiak.appointmentscheduler.validation.groups.CreateCorporateCustomer;
+import com.example.slabiak.appointmentscheduler.validation.groups.CreateParishCustomer;
 import com.example.slabiak.appointmentscheduler.validation.groups.CreateUser;
-import com.example.slabiak.appointmentscheduler.validation.groups.UpdateCorporateCustomer;
+import com.example.slabiak.appointmentscheduler.validation.groups.UpdateParishCustomer;
 import com.example.slabiak.appointmentscheduler.validation.groups.UpdateUser;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -41,12 +41,12 @@ public class CustomerController {
     @GetMapping("/{id}")
     public String showCustomerDetails(@PathVariable int id, Model model) {
         Customer customer = userService.getCustomerById(id);
-        if (customer.hasRole("ROLE_CUSTOMER_CORPORATE")) {
+        if (customer.hasRole("ROLE_CUSTOMER_PARISH")) {
             if (!model.containsAttribute("user")) {
-                model.addAttribute("user", new UserForm(userService.getCorporateCustomerById(id)));
+                model.addAttribute("user", new UserForm(userService.getParishCustomerById(id)));
             }
-            model.addAttribute("account_type", "customer_corporate");
-            model.addAttribute("formActionProfile", "/customers/corporate/update/profile");
+            model.addAttribute("account_type", "customer_parish");
+            model.addAttribute("formActionProfile", "/customers/parish/update/profile");
         } else if (customer.hasRole("ROLE_CUSTOMER_RETAIL")) {
             if (!model.containsAttribute("user")) {
                 model.addAttribute("user", new UserForm(userService.getRetailCustomerById(id)));
@@ -63,14 +63,14 @@ public class CustomerController {
         return "users/updateUserForm";
     }
 
-    @PostMapping("/corporate/update/profile")
-    public String processCorporateCustomerProfileUpdate(@Validated({UpdateUser.class, UpdateCorporateCustomer.class}) @ModelAttribute("user") UserForm user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    @PostMapping("/parish/update/profile")
+    public String processParishCustomerProfileUpdate(@Validated({UpdateUser.class, UpdateParishCustomer.class}) @ModelAttribute("user") UserForm user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", bindingResult);
             redirectAttributes.addFlashAttribute("user", user);
             return "redirect:/customers/" + user.getId();
         }
-        userService.updateCorporateCustomerProfile(user);
+        userService.updateParishCustomerProfile(user);
         return "redirect:/customers/" + user.getId();
     }
 
@@ -91,9 +91,9 @@ public class CustomerController {
         if (currentUser != null) {
             return "redirect:/";
         }
-        if (customerType.equals("corporate")) {
-            model.addAttribute("account_type", "customer_corporate");
-            model.addAttribute("registerAction", "/customers/new/corporate");
+        if (customerType.equals("parish")) {
+            model.addAttribute("account_type", "customer_parish");
+            model.addAttribute("registerAction", "/customers/new/parish");
         } else if (customerType.equals("retail")) {
             model.addAttribute("account_type", "customer_retail");
             model.addAttribute("registerAction", "/customers/new/retail");
@@ -106,7 +106,7 @@ public class CustomerController {
 
 
     @PostMapping("/new/retail")
-    public String processReatilCustomerRegistration(@Validated({CreateUser.class}) @ModelAttribute("user") UserForm userForm, BindingResult bindingResult, Model model) {
+    public String processRetailCustomerRegistration(@Validated({CreateUser.class}) @ModelAttribute("user") UserForm userForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             populateModel(model, userForm, "customer_retail", "/customers/new/retail", null);
             return "users/createUserForm";
@@ -116,20 +116,20 @@ public class CustomerController {
         return "users/login";
     }
 
-    @PostMapping("/new/corporate")
-    public String processCorporateCustomerRegistration(@Validated({CreateUser.class, CreateCorporateCustomer.class}) @ModelAttribute("user") UserForm userForm, BindingResult bindingResult, Model model) {
+    @PostMapping("/new/parish")
+    public String processParishCustomerRegistration(@Validated({CreateUser.class, CreateParishCustomer.class}) @ModelAttribute("user") UserForm userForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            populateModel(model, userForm, "customer_corporate", "/customers/new/corporate", null);
+            populateModel(model, userForm, "customer_parish", "/customers/new/parish", null);
             return "users/createUserForm";
         }
-        userService.saveNewCorporateCustomer(userForm);
+        userService.saveNewParishCustomer(userForm);
         model.addAttribute("createdUserName", userForm.getUserName());
         return "users/login";
     }
 
 
     @PostMapping("/update/password")
-    public String processCustomerPasswordUpate(@Valid @ModelAttribute("passwordChange") ChangePasswordForm passwordChange, BindingResult bindingResult, @AuthenticationPrincipal CustomUserDetails currentUser, RedirectAttributes redirectAttributes) {
+    public String processCustomerPasswordUpdate(@Valid @ModelAttribute("passwordChange") ChangePasswordForm passwordChange, BindingResult bindingResult, @AuthenticationPrincipal CustomUserDetails currentUser, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.passwordChange", bindingResult);
             redirectAttributes.addFlashAttribute("passwordChange", passwordChange);

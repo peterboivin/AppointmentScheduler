@@ -68,14 +68,14 @@ public class Provider extends User {
         this.workingPlan = workingPlan;
     }
 
-    public List<Work> getCorporateWorks() {
-        List<Work> corporateWorks = new ArrayList<>();
+    public List<Work> getParishWorks() {
+        List<Work> parishWorks = new ArrayList<>();
         for (Work w : works) {
-            if (w.getTargetCustomer().equals("corporate")) {
-                corporateWorks.add(w);
+            if (w.getTargetCustomer().equals("parish")) {
+                parishWorks.add(w);
             }
         }
-        return corporateWorks;
+        return parishWorks;
     }
 
     public List<Work> getRetailWorks() {

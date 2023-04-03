@@ -63,7 +63,7 @@ public class WorkServiceImpl implements WorkService {
         Work work = getWorkById(workId);
         if (customer.hasRole("ROLE_CUSTOMER_RETAIL") && !work.getTargetCustomer().equals("retail")) {
             return false;
-        } else return !customer.hasRole("ROLE_CUSTOMER_CORPORATE") || work.getTargetCustomer().equals("corporate");
+        } else return !customer.hasRole("ROLE_CUSTOMER_PARISH") || work.getTargetCustomer().equals("parish");
     }
 
     @Override
@@ -77,8 +77,8 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public List<Work> getCorporateCustomerWorks() {
-        return workRepository.findByTargetCustomer("corporate");
+    public List<Work> getParishCustomerWorks() {
+        return workRepository.findByTargetCustomer("parish");
     }
 
     @Override
@@ -87,8 +87,8 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public List<Work> getWorksForCorporateCustomerByProviderId(int providerId) {
-        return workRepository.findByTargetCustomerAndProviderId("corporate", providerId);
+    public List<Work> getWorksForParishCustomerByProviderId(int providerId) {
+        return workRepository.findByTargetCustomerAndProviderId("parish", providerId);
     }
 
 

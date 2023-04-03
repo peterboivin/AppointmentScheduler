@@ -80,7 +80,7 @@
 
                     </div>
 
-                    <th:block th:if="${account_type =='customer_corporate'}">
+                    <th:block th:if="${account_type =='customer_parish'}">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="companyName">Company Name</label>
@@ -155,7 +155,7 @@
                     <th:block th:if="${account_type =='provider'}">
                         <div class="form-group">
                             <p class="text-primary">retail customer target</p>
-                            <p class="text-info">corporate customer target</p>
+                            <p class="text-info">parish customer target</p>
                             <label>Works:</label>
                             <ul>
                                 <li th:each="work : ${allWorks}">

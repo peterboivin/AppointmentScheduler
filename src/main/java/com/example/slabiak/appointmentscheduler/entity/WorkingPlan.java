@@ -3,7 +3,8 @@ package com.example.slabiak.appointmentscheduler.entity;
 import com.example.slabiak.appointmentscheduler.entity.user.User;
 import com.example.slabiak.appointmentscheduler.entity.user.provider.Provider;
 import com.example.slabiak.appointmentscheduler.model.DayPlan;
-import com.example.slabiak.appointmentscheduler.model.TimePeroid;
+import com.example.slabiak.appointmentscheduler.model.TimePeriod;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -28,30 +29,37 @@ public class WorkingPlan {
 
     @Type(type = "json")
     @Column(columnDefinition = "json", name = "monday")
+    @JsonFormat(pattern="MM-dd-yyyy HH:mm:ss")
     private DayPlan monday;
 
     @Type(type = "json")
     @Column(columnDefinition = "json", name = "tuesday")
+    @JsonFormat(pattern="MM-dd-yyyy HH:mm:ss")
     private DayPlan tuesday;
 
     @Type(type = "json")
     @Column(columnDefinition = "json", name = "wednesday")
+    @JsonFormat(pattern="MM-dd-yyyy HH:mm:ss")
     private DayPlan wednesday;
 
     @Type(type = "json")
     @Column(columnDefinition = "json", name = "thursday")
+    @JsonFormat(pattern="MM-dd-yyyy HH:mm:ss")
     private DayPlan thursday;
 
     @Type(type = "json")
     @Column(columnDefinition = "json", name = "friday")
+    @JsonFormat(pattern="MM-dd-yyyy HH:mm:ss")
     private DayPlan friday;
 
     @Type(type = "json")
     @Column(columnDefinition = "json", name = "saturday")
+    @JsonFormat(pattern="MM-dd-yyyy HH:mm:ss")
     private DayPlan saturday;
 
     @Type(type = "json")
     @Column(columnDefinition = "json", name = "sunday")
+    @JsonFormat(pattern="MM-dd-yyyy HH:mm:ss")
     private DayPlan sunday;
 
 
@@ -163,9 +171,9 @@ public class WorkingPlan {
         WorkingPlan wp = new WorkingPlan();
         LocalTime defaultStartHour = LocalTime.parse("06:00");
         LocalTime defaultEndHour = LocalTime.parse("18:00");
-        TimePeroid defaultWorkingPeroid = new TimePeroid(defaultStartHour, defaultEndHour);
+        TimePeriod defaultWorkingPeriod = new TimePeriod(defaultStartHour, defaultEndHour);
         DayPlan defaultDayPlan = new DayPlan();
-        defaultDayPlan.setWorkingHours(defaultWorkingPeroid);
+        defaultDayPlan.setWorkingHours(defaultWorkingPeriod);
         wp.setMonday(defaultDayPlan);
         wp.setTuesday(defaultDayPlan);
         wp.setWednesday(defaultDayPlan);

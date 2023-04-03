@@ -17,7 +17,7 @@ You can use the following credentials with live demo:
 | --- | --- | --- |
 | `admin` | admin | qwerty123 |
 | `provider` | provider |qwerty123 |
-| `corporate customer` | customer_c |qwerty123 |
+| `parish customer` | customer_c |qwerty123 |
 | `retail customer` | customer_r |qwerty123 |
 
 ## Blog
@@ -69,7 +69,7 @@ The app will start running at <http://localhost:8080>
 
 `customer retail` - registration page is public and can be created by everyone. Customer can only book new appointments and manage them. This type of customer sees only services which targets retail customer.
 
-`customer corporate` - almost the same as retail customer. The only difference is that this type of account needs to provide VAT number and Company Name and can see only services which targets corporrate customer.
+`customer parish` - almost the same as retail customer. The only difference is that this type of account needs to provide VAT number and Company Name and can see only services which targets corporrate customer.
 
 ## Booking process
 
@@ -82,7 +82,7 @@ To book a new appointment customer needs to click `New Appointment` button on al
 
 Available hours are calculatated with getAvailableHours function from AppointmentService:
 
-`List<TimePeroid> getAvailableHours(int providerId,int customerId, int workId, LocalDate date)`
+`List<TimePeriod> getAvailableHours(int providerId,int customerId, int workId, LocalDate date)`
 
 This function works as follow:
 
@@ -91,7 +91,7 @@ This function works as follow:
 3. excludes all brakes from working hours
 4. excludes all providers booked appointments for that day
 5. excludes all customers booked appointments for that day
-6. gets selected work duration and calculate available time peroids 
+6. gets selected work duration and calculate available time periods 
 7. returns available hours
 
 ## Appointments lifecycle

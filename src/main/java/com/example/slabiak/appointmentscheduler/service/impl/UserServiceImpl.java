@@ -2,7 +2,7 @@ package com.example.slabiak.appointmentscheduler.service.impl;
 
 import com.example.slabiak.appointmentscheduler.dao.RoleRepository;
 import com.example.slabiak.appointmentscheduler.dao.user.UserRepository;
-import com.example.slabiak.appointmentscheduler.dao.user.customer.CorporateCustomerRepository;
+import com.example.slabiak.appointmentscheduler.dao.user.customer.ParishCustomerRepository;
 import com.example.slabiak.appointmentscheduler.dao.user.customer.CustomerRepository;
 import com.example.slabiak.appointmentscheduler.dao.user.customer.RetailCustomerRepository;
 import com.example.slabiak.appointmentscheduler.dao.user.provider.ProviderRepository;
@@ -10,7 +10,7 @@ import com.example.slabiak.appointmentscheduler.entity.Work;
 import com.example.slabiak.appointmentscheduler.entity.WorkingPlan;
 import com.example.slabiak.appointmentscheduler.entity.user.Role;
 import com.example.slabiak.appointmentscheduler.entity.user.User;
-import com.example.slabiak.appointmentscheduler.entity.user.customer.CorporateCustomer;
+import com.example.slabiak.appointmentscheduler.entity.user.customer.ParishCustomer;
 import com.example.slabiak.appointmentscheduler.entity.user.customer.Customer;
 import com.example.slabiak.appointmentscheduler.entity.user.customer.RetailCustomer;
 import com.example.slabiak.appointmentscheduler.entity.user.provider.Provider;
@@ -31,16 +31,16 @@ public class UserServiceImpl implements UserService {
 
     private final ProviderRepository providerRepository;
     private final CustomerRepository customerRepository;
-    private final CorporateCustomerRepository corporateCustomerRepository;
+    private final ParishCustomerRepository parishCustomerRepository;
     private final RetailCustomerRepository retailCustomerRepository;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(ProviderRepository providerRepository, CustomerRepository customerRepository, CorporateCustomerRepository corporateCustomerRepository, RetailCustomerRepository retailCustomerRepository, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(ProviderRepository providerRepository, CustomerRepository customerRepository, ParishCustomerRepository parishCustomerRepository, RetailCustomerRepository retailCustomerRepository, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.providerRepository = providerRepository;
         this.customerRepository = customerRepository;
-        this.corporateCustomerRepository = corporateCustomerRepository;
+        this.parishCustomerRepository = parishCustomerRepository;
         this.retailCustomerRepository = retailCustomerRepository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -80,9 +80,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @PreAuthorize("#corporateCustomerId == principal.id or hasRole('ADMIN')")
-    public CorporateCustomer getCorporateCustomerById(int corporateCustomerId) {
-        return corporateCustomerRepository.findById(corporateCustomerId)
+    @PreAuthorize("#parishCustomerId == principal.id or hasRole('ADMIN')")
+    public ParishCustomer getParishCustomerById(int parishCustomerId) {
+        return parishCustomerRepository.findById(parishCustomerId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
     }
 
@@ -131,8 +131,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Provider> getProvidersWithCorporateWorks() {
-        return providerRepository.findAllWithCorporateWorks();
+    public List<Provider> getProvidersWithParishWorks() {
+        return providerRepository.findAllWithParishWorks();
     }
 
     @Override
@@ -167,10 +167,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @PreAuthorize("#updateData.id == principal.id or hasRole('ADMIN')")
-    public void updateCorporateCustomerProfile(UserForm updateData) {
-        CorporateCustomer corporateCustomer = corporateCustomerRepository.getOne(updateData.getId());
-        corporateCustomer.update(updateData);
-        corporateCustomerRepository.save(corporateCustomer);
+    public void updateParishCustomerProfile(UserForm updateData) {
+        ParishCustomer parishCustomer = parishCustomerRepository.getOne(updateData.getId());
+        parishCustomer.update(updateData);
+        parishCustomerRepository.save(parishCustomer);
 
     }
 
@@ -181,9 +181,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveNewCorporateCustomer(UserForm userForm) {
-        CorporateCustomer corporateCustomer = new CorporateCustomer(userForm, passwordEncoder.encode(userForm.getPassword()), getRoleForCorporateCustomers());
-        corporateCustomerRepository.save(corporateCustomer);
+    public void saveNewParishCustomer(UserForm userForm) {
+        ParishCustomer parishCustomer = new ParishCustomer(userForm, passwordEncoder.encode(userForm.getPassword()), getRoleForParishCustomers());
+        parishCustomerRepository.save(parishCustomer);
     }
 
     @Override
@@ -203,9 +203,9 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Collection<Role> getRoleForCorporateCustomers() {
+    public Collection<Role> getRoleForParishCustomers() {
         HashSet<Role> roles = new HashSet();
-        roles.add(roleRepository.findByName("ROLE_CUSTOMER_CORPORATE"));
+        roles.add(roleRepository.findByName("ROLE_CUSTOMER_PARISH"));
         roles.add(roleRepository.findByName("ROLE_CUSTOMER"));
         return roles;
     }

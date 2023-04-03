@@ -1,4 +1,4 @@
 package com.example.slabiak.appointmentscheduler.validation.groups;
 
-public interface UpdateCorporateCustomer {
+public interface CreateParishCustomer {
 }

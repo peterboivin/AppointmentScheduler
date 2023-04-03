@@ -15,11 +15,11 @@ public interface WorkService {
 
     List<Work> getRetailCustomerWorks();
 
-    List<Work> getCorporateCustomerWorks();
+    List<Work> getParishCustomerWorks();
 
     List<Work> getWorksForRetailCustomerByProviderId(int providerId);
 
-    List<Work> getWorksForCorporateCustomerByProviderId(int providerId);
+    List<Work> getWorksForParishCustomerByProviderId(int providerId);
 
     void updateWork(Work work);
 

@@ -1,3 +1,4 @@
+DROP DATABASE `appointmentscheduler`;
 CREATE DATABASE  IF NOT EXISTS `appointmentscheduler`;
 USE `appointmentscheduler`;
 
@@ -173,13 +174,13 @@ CREATE TABLE IF NOT EXISTS `messages` (
 
 
 
-CREATE TABLE IF NOT EXISTS `corporate_customers` (
+CREATE TABLE IF NOT EXISTS `parish_customers` (
 	`id_customer` int(11) NOT NULL,
 	`vat_number` VARCHAR(256),
 	`company_name` VARCHAR(256),
   PRIMARY KEY (`id_customer`),
 	KEY `id_customer` (`id_customer`),
-	CONSTRAINT `FK_corporate_customer_user` FOREIGN KEY (`id_customer`)
+	CONSTRAINT `FK_parish_customer_user` FOREIGN KEY (`id_customer`)
 	REFERENCES `users` (`id`)
 )
   ENGINE = InnoDB
@@ -262,7 +263,7 @@ INSERT INTO `roles` (id,name) VALUES
   (1,'ROLE_ADMIN'),
   (2,'ROLE_PROVIDER'),
   (3,'ROLE_CUSTOMER'),
-  (4,'ROLE_CUSTOMER_CORPORATE'),
+  (4,'ROLE_CUSTOMER_PARISH'),
   (5,'ROLE_CUSTOMER_RETAIL');
 
 -- INSERT admin account with username: 'admin' and password 'qwerty123'
@@ -292,12 +293,12 @@ VALUES (3, 3);
 INSERT INTO `users_roles` (user_id, role_id)
 VALUES (3, 5);
 
--- INSERT corporate customer account with username: 'customer_c' and password 'qwerty123'
+-- INSERT parish customer account with username: 'customer_c' and password 'qwerty123'
 INSERT INTO `users` (id, username, password)
 VALUES (4, 'customer_c', '$2a$10$EqKcp1WFKVQISheBxkQJoOqFbsWDzGJXRz/tjkGq85IZKJJ1IipYi');
 INSERT INTO `customers` (id_customer)
 VALUES (4);
-INSERT INTO `corporate_customers` (id_customer, vat_number, company_name)
+INSERT INTO `parish_customers` (id_customer, vat_number, company_name)
 VALUES (4, '123456789', 'Company name');
 INSERT INTO `users_roles` (user_id, role_id)
 VALUES (4, 3);
@@ -305,18 +306,18 @@ INSERT INTO `users_roles` (user_id, role_id)
 VALUES (4, 4);
 
 INSERT INTO `works` (id, name, duration, price, editable, target, description)
-VALUES (1, 'English lesson', 60, 100.00, true, 'retail',
-        'This is english lesson with duration 60 minutes and price 100 pln');
+VALUES (1, 'Confession', 15, 0.00, true, 'parish',
+        'Confession');
 
 INSERT INTO works_providers
 VALUES (2, 1);
 INSERT INTO working_plans
 VALUES (2,
-        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeroidsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
-        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeroidsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
-        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeroidsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
-        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeroidsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
-        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeroidsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
-        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeroidsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
-        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeroidsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}');
+        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeriodsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
+        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeriodsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
+        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeriodsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
+        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeriodsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
+        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeriodsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
+        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeriodsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}',
+        '{"workingHours":{"start":[6,0],"end":[18,0]},"breaks":[],"timePeriodsWithBreaksExcluded":[{"start":[6,0],"end":[18,0]}]}');
 

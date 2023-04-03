@@ -14849,7 +14849,7 @@ var ViewSpecManager = /** @class */ (function () {
                 spec.duration = duration;
                 spec.durationUnit = unit;
                 // view is a single-unit duration, like "week" or "day"
-                // incorporate options for this. lowest priority
+                // inparish options for this. lowest priority
                 if (duration.as(unit) === 1) {
                     spec.singleUnit = unit;
                     overridesChain.unshift(viewOverrides[unit] || {});

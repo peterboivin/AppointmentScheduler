@@ -14,6 +14,6 @@ public interface ProviderRepository extends CommonUserRepository<Provider> {
     @Query("select distinct p from Provider p inner join p.works w where w.targetCustomer = 'retail'")
     List<Provider> findAllWithRetailWorks();
 
-    @Query("select distinct p from Provider p inner join p.works w where w.targetCustomer = 'corporate'")
-    List<Provider> findAllWithCorporateWorks();
+    @Query("select distinct p from Provider p inner join p.works w where w.targetCustomer = 'parish'")
+    List<Provider> findAllWithParishWorks();
 }

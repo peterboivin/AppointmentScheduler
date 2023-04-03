@@ -4,7 +4,7 @@ package com.example.slabiak.appointmentscheduler.service;
 import com.example.slabiak.appointmentscheduler.entity.Work;
 import com.example.slabiak.appointmentscheduler.entity.user.Role;
 import com.example.slabiak.appointmentscheduler.entity.user.User;
-import com.example.slabiak.appointmentscheduler.entity.user.customer.CorporateCustomer;
+import com.example.slabiak.appointmentscheduler.entity.user.customer.ParishCustomer;
 import com.example.slabiak.appointmentscheduler.entity.user.customer.Customer;
 import com.example.slabiak.appointmentscheduler.entity.user.customer.RetailCustomer;
 import com.example.slabiak.appointmentscheduler.entity.user.provider.Provider;
@@ -39,7 +39,7 @@ public interface UserService {
 
     List<Provider> getProvidersWithRetailWorks();
 
-    List<Provider> getProvidersWithCorporateWorks();
+    List<Provider> getProvidersWithParishWorks();
 
     List<Provider> getProvidersByWork(Work work);
 
@@ -70,17 +70,17 @@ public interface UserService {
     Collection<Role> getRolesForRetailCustomer();
 
     /*
-     * CorporateCustomer
+     * ParishCustomer
      * */
-    CorporateCustomer getCorporateCustomerById(int corporateCustomerId);
+    ParishCustomer getParishCustomerById(int parishCustomerId);
 
     List<RetailCustomer> getAllRetailCustomers();
 
-    void saveNewCorporateCustomer(UserForm userForm);
+    void saveNewParishCustomer(UserForm userForm);
 
-    void updateCorporateCustomerProfile(UserForm updateData);
+    void updateParishCustomerProfile(UserForm updateData);
 
-    Collection<Role> getRoleForCorporateCustomers();
+    Collection<Role> getRoleForParishCustomers();
 
 
 }

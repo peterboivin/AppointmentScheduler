@@ -8,7 +8,7 @@
     <div class="col-lg-6">
         <div class="card">
             <div class="card-header text-center">
-                <th:block th:if="${account_type =='customer_corporate'}">Register new Corporate Customer Account</th:block>
+                <th:block th:if="${account_type =='customer_parish'}">Register new Parish Customer Account</th:block>
                 <th:block th:if="${account_type =='customer_retail'}">Register new Retail Customer Account</th:block>
                 <th:block th:if="${account_type =='provider'}">Register new Provider Account</th:block>
             </div>
@@ -48,7 +48,7 @@
 
                     </div>
 
-                    <th:block th:if="${account_type =='customer_corporate'}">
+                    <th:block th:if="${account_type =='customer_parish'}">
                         <div class="form-group">
                             <label for="companyName">Company Name</label>
                             <input type="text" class="form-control" th:classappend="${#fields.hasErrors('companyName') ? 'is-invalid' :''}" th:field="*{companyName}"
@@ -73,7 +73,7 @@
                     </th:block>
 
                     <div class="form-group">
-                        <label th:if="${account_type =='customer_corporate'}" for="firstName">Contact person first
+                        <label th:if="${account_type =='customer_parish'}" for="firstName">Contact person first
                             name</label>
                         <label th:if="${account_type =='customer_retail' or account_type =='provider'}"
                                for="firstName">First
@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label th:if="${account_type =='customer_corporate'}" for="lastName">Contact person last
+                        <label th:if="${account_type =='customer_parish'}" for="lastName">Contact person last
                             name</label>
                         <label th:if="${account_type =='customer_retail' or account_type =='provider'}"
                                for="lastName">Last
@@ -146,7 +146,7 @@
                     <th:block th:if="${account_type =='provider'}">
                         <div class="form-group">
                             <p class="text-primary">retail customer target</p>
-                            <p class="text-info">corporate customer target</p>
+                            <p class="text-info">parish customer target</p>
                             <label>Works:</label>
                             <ul>
                                 <li th:each="work : ${allWorks}">

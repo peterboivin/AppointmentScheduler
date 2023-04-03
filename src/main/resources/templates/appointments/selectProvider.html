@@ -14,8 +14,8 @@
                             Lastname</span></h5>
                 <p sec:authorize="hasRole('ROLE_CUSTOMER_RETAIL')"
                    th:text="${'Available works: '+ provider.getRetailWorks().size()}">Available works: 3</p>
-                <p sec:authorize="hasRole('ROLE_CUSTOMER_CORPORATE')"
-                   th:text="${'Available works: '+ provider.getCorporateWorks().size()}">Available works: 3</p>
+                <p sec:authorize="hasRole('ROLE_CUSTOMER_PARISH')"
+                   th:text="${'Available works: '+ provider.getParishWorks().size()}">Available works: 3</p>
                 <a th:href="@{'/appointments/new/'+${provider.id}}" class="btn btn-primary">Select</a>
 
             </div>

@@ -29,8 +29,8 @@ public class Customer extends User {
 
 
     public String getType() {
-        if (super.hasRole("ROLE_CUSTOMER_CORPORATE")) {
-            return "corporate";
+        if (super.hasRole("ROLE_CUSTOMER_PARISH")) {
+            return "parish";
         } else if (super.hasRole("ROLE_CUSTOMER_RETAIL")) {
             return "retail";
         }
